@@ -12,6 +12,7 @@ int incomingByte;
 int fuel = 12;
 int sensor = A0;
 int value = 0;
+int full = 11;
 
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 Servo servo1;
@@ -25,6 +26,8 @@ void setup() {
   delay(500);
   pinMode(buttonPin, INPUT);
   pinMode(led, OUTPUT);
+  pinMode(full, OUTPUT);
+  digitalWrite(full, LOW);
   pinMode(fuel, OUTPUT);
   digitalWrite(fuel, HIGH);
   Serial.begin(9600);
@@ -36,9 +39,11 @@ void setup() {
 void loop() { 
   start:
 value = analogRead(sensor);
+digitalWrite(full, LOW);
 
 if (value > 50){
   Serial.print("full");
+  digitalWrite(full, HIGH);
 }
   
   if (Serial.available() > 0) {
